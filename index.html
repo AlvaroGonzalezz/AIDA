@@ -1,279 +1,321 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="assets/css/style.css">
-<title>AIDA — Asistente de Inteligencia Artificial</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/icon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>AIDA — Asistente de Inteligencia Artificial</title>
 </head>
+
 <body>
 
-<div class="phone">
+    <div class="phone">
 
-  <section class="screen" id="screen-splash">
-    <img class="splash-logo" src="assets/img/icon.png" alt="AIDA Logo">
-    <div class="brand-name">AIDA</div>
-    <div class="brand-tag">ARTIFICIAL INTELLIGENCE&nbsp;&nbsp;DAILY ASSISTANT</div>
-    <div class="splash-cta">
-      <button class="btn btn-primary" onclick="go('login')">Iniciar sesión</button>
-      <button class="btn btn-ghost" onclick="go('registro')">Crear cuenta</button>
+        <section class="screen" id="screen-splash">
+            <img class="splash-logo" src="assets/img/icon.png" alt="AIDA Logo">
+            <div class="brand-name">AIDA</div>
+            <div class="brand-tag">ARTIFICIAL INTELLIGENCE&nbsp;&nbsp;DAILY ASSISTANT</div>
+            <div class="splash-cta">
+                <button class="btn btn-primary" onclick="go('login')">Iniciar sesión</button>
+                <button class="btn btn-ghost" onclick="go('registro')">Crear cuenta</button>
+            </div>
+        </section>
+
+        <!-- LOGIN -->
+        <section class="screen" id="screen-login" hidden>
+            <div class="top-back" onclick="go('splash')"><i class="bi bi-arrow-left"></i></div>
+            <div class="heading"><i class="bi bi-brightness-high"></i> Bienvenido de nuevo</div>
+            <div class="subheading">Inicia sesión para continuar con tu día.</div>
+            <div class="field"><label>Correo electrónico</label><input type="email" placeholder="tucorreo@ejemplo.com">
+            </div>
+            <div class="field"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
+            <button class="btn btn-text" style="align-self:flex-start; padding-left:0; margin-bottom:8px;">¿Olvidaste tu
+                contraseña?</button>
+            <button class="btn btn-primary" onclick="go('dashboard')">Iniciar sesión</button>
+
+            <div class="foot-link">¿No tienes cuenta? <a onclick="go('registro')">Crear cuenta</a></div>
+        </section>
+
+        <!-- REGISTRO -->
+        <section class="screen" id="screen-registro" hidden>
+            <div class="top-back" onclick="go('splash')"><i class="bi bi-arrow-left"></i></div>
+            <div class="heading"><i class="bi bi-person"></i> Crear cuenta </div>
+            <div class="subheading">Empecemos por lo esencial.</div>
+            <div class="field"><label>Nombre</label><input id="reg-nombre" type="text" placeholder="¿Cómo te llamas?">
+            </div>
+            <div class="field"><label>Correo</label><input type="email" placeholder="tucorreo@ejemplo.com"></div>
+            <div class="field"><label>Contraseña</label><input type="password" placeholder="Mínimo 8 caracteres"></div>
+            <div class="field"><label>Confirmar contraseña</label><input type="password" placeholder="Vuelve a ingresar la contraseña"></div>
+
+            <button class="btn btn-primary" onclick="startOnboarding()">Crear cuenta</button>
+            <div class="foot-link">¿Ya tienes cuenta? <a onclick="go('login')">Iniciar sesión</a></div>
+        </section>
+
+        <!-- ONBOARDING: INTRO -->
+        <section class="screen" id="screen-onb-intro" hidden>
+            <div class="aida-orb">👋</div>
+            <div class="heading">Hola, soy AIDA</div>
+            <div class="subheading">Antes de ayudarte a organizar tu día, quiero conocerte un poco. Son solo 4 preguntas
+                rápidas — puedes saltarte cualquiera.</div>
+            <div class="stack-end">
+                <button class="btn btn-primary" onclick="go('onb-quien')">Comenzar</button>
+            </div>
+        </section>
+
+        <!-- ONBOARDING: QUIÉN ERES -->
+        <section class="screen" id="screen-onb-quien" hidden>
+            <div class="top-back" onclick="go('onb-intro')"><i class="bi bi-arrow-left"></i></div>
+            <div class="step-progress" data-step="1"></div>
+            <div class="heading">¿Quién eres?</div>
+            <div class="subheading">Solo lo justo para hablarte como se debe.</div>
+            <div class="field"><label>¿Cómo quieres que te llame?</label><input id="onb-nombre" type="text"
+                    placeholder="Ej. Álvaro"></div>
+            <div class="field">
+                <label>Rango de edad</label>
+                <div class="radio-row" id="edad-group">
+                    <div class="radio-opt" onclick="selectRadio(this,'edad-group')">
+                        <div class="radio-dot"></div>&lt; 18
+                    </div>
+                    <div class="radio-opt" onclick="selectRadio(this,'edad-group')">
+                        <div class="radio-dot"></div>18 – 24
+                    </div>
+                    <div class="radio-opt" onclick="selectRadio(this,'edad-group')">
+                        <div class="radio-dot"></div>25 – 34
+                    </div>
+                    <div class="radio-opt" onclick="selectRadio(this,'edad-group')">
+                        <div class="radio-dot"></div>35+
+                    </div>
+                </div>
+            </div>
+            <div class="grow"></div>
+            <button class="btn btn-primary" onclick="go('onb-situacion')">Continuar</button>
+        </section>
+
+        <!-- ONBOARDING: SITUACIÓN -->
+        <section class="screen" id="screen-onb-situacion" hidden>
+            <div class="top-back" onclick="go('onb-quien')"><i class="bi bi-arrow-left"></i></div>
+            <div class="step-progress" data-step="2"></div>
+            <div class="heading">¿Qué describe tu día a día?</div>
+            <div class="subheading">Puedes elegir varias opciones.</div>
+            <div class="chips">
+                <div class="chip" onclick="toggleChip(this)">Estudio</div>
+                <div class="chip" onclick="toggleChip(this)">Trabajo</div>
+                <div class="chip" onclick="toggleChip(this)">Estudio y trabajo</div>
+                <div class="chip" onclick="toggleChip(this)">Emprendo</div>
+                <div class="chip" onclick="toggleChip(this)">Freelance</div>
+                <div class="chip" onclick="toggleChip(this)">Otro</div>
+            </div>
+            <div class="grow"></div>
+            <button class="btn btn-primary" onclick="go('onb-dia')">Continuar</button>
+        </section>
+
+        <!-- ONBOARDING: TU DÍA -->
+        <section class="screen" id="screen-onb-dia" hidden>
+            <div class="top-back" onclick="go('onb-situacion')"><i class="bi bi-arrow-left"></i></div>
+            <div class="step-progress" data-step="3"></div>
+            <div class="heading">¿Cómo es tu día?</div>
+            <div class="subheading">Así puedo armar planes que sí encajen en tu tiempo.</div>
+            <div class="field"><label>Empieza mi día</label><input type="time" value="07:00"></div>
+            <div class="field"><label>Termina mi día</label><input type="time" value="23:00"></div>
+            <div class="field">
+                <label>¿Cuándo te concentras mejor?</label>
+                <div class="chips">
+                    <div class="chip" onclick="selectOnly(this)">Mañana</div>
+                    <div class="chip" onclick="selectOnly(this)">Tarde</div>
+                    <div class="chip" onclick="selectOnly(this)">Noche</div>
+                    <div class="chip" onclick="selectOnly(this)">No estoy seguro</div>
+                </div>
+            </div>
+            <div class="grow"></div>
+            <button class="btn btn-primary" onclick="go('onb-objetivos')">Continuar</button>
+        </section>
+
+        <!-- ONBOARDING: OBJETIVOS -->
+        <section class="screen" id="screen-onb-objetivos" hidden>
+            <div class="top-back" onclick="go('onb-dia')"><i class="bi bi-arrow-left"></i></div>
+            <div class="step-progress" data-step="4"></div>
+            <div class="heading">¿Qué quieres lograr con AIDA?</div>
+            <div class="subheading">Elige lo que más te represente ahora.</div>
+            <div class="chips">
+                <div class="chip" onclick="toggleChip(this)">Organizar la escuela</div>
+                <div class="chip" onclick="toggleChip(this)">Organizar el trabajo</div>
+                <div class="chip" onclick="toggleChip(this)">Terminar proyectos</div>
+                <div class="chip" onclick="toggleChip(this)">Crear hábitos</div>
+                <div class="chip" onclick="toggleChip(this)">Reducir pendientes</div>
+            </div>
+            <div class="grow"></div>
+            <button class="btn btn-primary" onclick="go('onb-cuentame')">Continuar</button>
+        </section>
+
+        <!-- ONBOARDING: CUÉNTAME MÁS -->
+        <section class="screen" id="screen-onb-cuentame" hidden>
+            <div class="top-back" onclick="go('onb-objetivos')"><i class="bi bi-arrow-left"></i></div>
+            <div class="step-progress" data-step="5"></div>
+            <div class="heading">¿Algo más que quieras contarme?</div>
+            <div class="subheading">Opcional. Escribe libre, yo lo interpreto.</div>
+            <div class="field">
+                <textarea
+                    placeholder="Ej. Trabajo por las mañanas y estudio por las tardes. Ando terminando varios proyectos a la vez."></textarea>
+            </div>
+            <div class="grow"></div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn btn-ghost" onclick="startLoading()">Omitir</button>
+                <button class="btn btn-primary" onclick="startLoading()">Continuar</button>
+            </div>
+        </section>
+
+        <!-- LOADING -->
+        <section class="screen" id="screen-loading" hidden>
+            <div class="aida-orb">✦</div>
+            <div class="heading">AIDA está aprendiendo sobre ti</div>
+            <div class="load-bar-track">
+                <div class="load-bar-fill" id="loadBarFill"></div>
+            </div>
+            <div class="load-checklist">
+                <div class="load-item">
+                    <div class="tick">✓</div>Tu rutina
+                </div>
+                <div class="load-item">
+                    <div class="tick">✓</div>Tus objetivos
+                </div>
+                <div class="load-item">
+                    <div class="tick">✓</div>Tu disponibilidad
+                </div>
+                <div class="load-item">
+                    <div class="tick">✓</div>Tus preferencias
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD -->
+        <section class="screen" id="screen-dashboard" hidden style="position:relative;">
+            <div class="dash-topbar">
+                <div>
+                    <div class="greeting" id="dashGreeting">Buenos días 👋</div>
+                </div>
+                <div class="avatar" id="dashAvatar">A</div>
+            </div>
+            <div class="greeting-sub">¿Qué vamos a lograr hoy?</div>
+
+            <div class="load-card">
+                <div class="load-card-top"><span>Carga de hoy</span><strong>72%</strong></div>
+                <div class="ring-track">
+                    <div class="ring-fill"></div>
+                </div>
+                <div class="load-card-foot">3 tareas · 2h 30m estimadas</div>
+            </div>
+
+            <div class="section-label">TU PLAN</div>
+            <div class="task-list">
+                <div class="task-card urgent">
+                    <div class="task-time">09:00</div>
+                    <div class="task-title"><span class="dot r"></span>Terminar documentación</div>
+                    <div class="task-meta">Proyecto Residencias · 1h 20m</div>
+                    <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-time">11:00</div>
+                    <div class="task-title"><span class="dot y"></span>Revisar código</div>
+                    <div class="task-meta">45 min</div>
+                    <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
+                </div>
+                <div class="task-card">
+                    <div class="task-time">16:00</div>
+                    <div class="task-title"><span class="dot g"></span>Estudiar para el examen</div>
+                    <div class="task-meta">Redes · 1h</div>
+                    <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item active">
+                    <div class="ic">🏠</div>Mi Día
+                </div>
+                <div class="nav-item">
+                    <div class="ic">📥</div>Caos
+                </div>
+                <div class="nav-item">
+                    <div class="ic">📋</div>Tareas
+                </div>
+                <div class="nav-item">
+                    <div class="ic">📁</div>Proyectos
+                </div>
+                <div class="nav-item">
+                    <div class="ic">⚙️</div>Ajustes
+                </div>
+            </div>
+
+            <div class="sheet-overlay" id="helpSheet" hidden onclick="closeSheetBg(event)">
+                <div class="sheet">
+                    <div class="sheet-handle"></div>
+                    <div class="sheet-title">AIDA</div>
+                    <div class="sheet-q">Puedo ayudarte a hacer esto. ¿Qué necesitas?</div>
+                    <div class="sheet-opts">
+                        <button class="sheet-opt">Explícame cómo hacerlo</button>
+                        <button class="sheet-opt">Divídelo en pasos</button>
+                        <button class="sheet-opt">Hazme un plan</button>
+                        <button class="sheet-opt">No sé por dónde empezar</button>
+                    </div>
+                    <button class="btn btn-ghost" onclick="closeSheet()">Cerrar</button>
+                </div>
+            </div>
+        </section>
+
     </div>
-  </section>
 
-  <!-- LOGIN -->
-  <section class="screen" id="screen-login" hidden>
-    <div class="top-back" onclick="go('splash')">←</div>
-    <div class="heading">Bienvenido de nuevo</div>
-    <div class="subheading">Inicia sesión para continuar con tu día.</div>
-    <div class="field"><label>Correo electrónico</label><input type="email" placeholder="tucorreo@ejemplo.com"></div>
-    <div class="field"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
-    <button class="btn btn-text" style="align-self:flex-start; padding-left:0; margin-bottom:8px;">¿Olvidaste tu contraseña?</button>
-    <button class="btn btn-primary" onclick="go('dashboard')">Iniciar sesión</button>
-    <div class="divider">o continúa con</div>
-    <button class="btn btn-ghost">Continuar con Google</button>
-    <div class="foot-link">¿No tienes cuenta? <a onclick="go('registro')">Crear cuenta</a></div>
-  </section>
+    <script>
+        function go(id) {
+            document.querySelectorAll('.screen').forEach(s => s.hidden = true);
+            document.getElementById('screen-' + id).hidden = false;
+            const bar = document.querySelector('#screen-' + id + ' .step-progress');
+            if (bar) {
+                const step = parseInt(bar.dataset.step, 10);
+                bar.innerHTML = '';
+                for (let i = 0; i < 5; i++) {
+                    const dot = document.createElement('span');
+                    if (i < step) dot.classList.add('done');
+                    bar.appendChild(dot);
+                }
+            }
+        }
 
-  <!-- REGISTRO -->
-  <section class="screen" id="screen-registro" hidden>
-    <div class="top-back" onclick="go('splash')">←</div>
-    <div class="heading">Crear cuenta</div>
-    <div class="subheading">Empecemos por lo esencial.</div>
-    <div class="field"><label>Nombre</label><input id="reg-nombre" type="text" placeholder="¿Cómo te llamas?"></div>
-    <div class="field"><label>Correo</label><input type="email" placeholder="tucorreo@ejemplo.com"></div>
-    <div class="field"><label>Contraseña</label><input type="password" placeholder="Mínimo 8 caracteres"></div>
-    <button class="btn btn-primary" onclick="startOnboarding()">Crear cuenta</button>
-    <div class="foot-link">¿Ya tienes cuenta? <a onclick="go('login')">Iniciar sesión</a></div>
-  </section>
+        function startOnboarding() {
+            const nombre = document.getElementById('reg-nombre').value;
+            if (nombre) document.getElementById('onb-nombre').placeholder = nombre;
+            go('onb-intro');
+        }
 
-  <!-- ONBOARDING: INTRO -->
-  <section class="screen" id="screen-onb-intro" hidden>
-    <div class="aida-orb">👋</div>
-    <div class="heading">Hola, soy AIDA</div>
-    <div class="subheading">Antes de ayudarte a organizar tu día, quiero conocerte un poco. Son solo 4 preguntas rápidas — puedes saltarte cualquiera.</div>
-    <div class="stack-end">
-      <button class="btn btn-primary" onclick="go('onb-quien')">Comenzar</button>
-    </div>
-  </section>
+        function toggleChip(el) { el.classList.toggle('selected'); }
+        function selectOnly(el) {
+            el.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+        function selectRadio(el, groupId) {
+            document.getElementById(groupId).querySelectorAll('.radio-opt').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+        }
 
-  <!-- ONBOARDING: QUIÉN ERES -->
-  <section class="screen" id="screen-onb-quien" hidden>
-    <div class="top-back" onclick="go('onb-intro')">←</div>
-    <div class="step-progress" data-step="1"></div>
-    <div class="heading">¿Quién eres?</div>
-    <div class="subheading">Solo lo justo para hablarte como se debe.</div>
-    <div class="field"><label>¿Cómo quieres que te llame?</label><input id="onb-nombre" type="text" placeholder="Ej. Álvaro"></div>
-    <div class="field">
-      <label>Rango de edad</label>
-      <div class="radio-row" id="edad-group">
-        <div class="radio-opt" onclick="selectRadio(this,'edad-group')"><div class="radio-dot"></div>&lt; 18</div>
-        <div class="radio-opt" onclick="selectRadio(this,'edad-group')"><div class="radio-dot"></div>18 – 24</div>
-        <div class="radio-opt" onclick="selectRadio(this,'edad-group')"><div class="radio-dot"></div>25 – 34</div>
-        <div class="radio-opt" onclick="selectRadio(this,'edad-group')"><div class="radio-dot"></div>35+</div>
-      </div>
-    </div>
-    <div class="grow"></div>
-    <button class="btn btn-primary" onclick="go('onb-situacion')">Continuar</button>
-  </section>
+        function startLoading() {
+            go('loading');
+            setTimeout(() => { document.getElementById('loadBarFill').style.width = '100%'; }, 100);
+            setTimeout(() => {
+                const nombre = document.getElementById('onb-nombre').value || document.getElementById('onb-nombre').placeholder || 'Álvaro';
+                const hora = new Date().getHours();
+                const saludo = hora < 12 ? 'Buenos días' : (hora < 19 ? 'Buenas tardes' : 'Buenas noches');
+                document.getElementById('dashGreeting').textContent = saludo + ', ' + nombre + ' 👋';
+                document.getElementById('dashAvatar').textContent = nombre.trim().charAt(0).toUpperCase() || 'A';
+                go('dashboard');
+            }, 2200);
+        }
 
-  <!-- ONBOARDING: SITUACIÓN -->
-  <section class="screen" id="screen-onb-situacion" hidden>
-    <div class="top-back" onclick="go('onb-quien')">←</div>
-    <div class="step-progress" data-step="2"></div>
-    <div class="heading">¿Qué describe tu día a día?</div>
-    <div class="subheading">Puedes elegir varias opciones.</div>
-    <div class="chips">
-      <div class="chip" onclick="toggleChip(this)">Estudio</div>
-      <div class="chip" onclick="toggleChip(this)">Trabajo</div>
-      <div class="chip" onclick="toggleChip(this)">Estudio y trabajo</div>
-      <div class="chip" onclick="toggleChip(this)">Emprendo</div>
-      <div class="chip" onclick="toggleChip(this)">Freelance</div>
-      <div class="chip" onclick="toggleChip(this)">Otro</div>
-    </div>
-    <div class="grow"></div>
-    <button class="btn btn-primary" onclick="go('onb-dia')">Continuar</button>
-  </section>
-
-  <!-- ONBOARDING: TU DÍA -->
-  <section class="screen" id="screen-onb-dia" hidden>
-    <div class="top-back" onclick="go('onb-situacion')">←</div>
-    <div class="step-progress" data-step="3"></div>
-    <div class="heading">¿Cómo es tu día?</div>
-    <div class="subheading">Así puedo armar planes que sí encajen en tu tiempo.</div>
-    <div class="field"><label>Empieza mi día</label><input type="time" value="07:00"></div>
-    <div class="field"><label>Termina mi día</label><input type="time" value="23:00"></div>
-    <div class="field">
-      <label>¿Cuándo te concentras mejor?</label>
-      <div class="chips">
-        <div class="chip" onclick="selectOnly(this)">Mañana</div>
-        <div class="chip" onclick="selectOnly(this)">Tarde</div>
-        <div class="chip" onclick="selectOnly(this)">Noche</div>
-        <div class="chip" onclick="selectOnly(this)">No estoy seguro</div>
-      </div>
-    </div>
-    <div class="grow"></div>
-    <button class="btn btn-primary" onclick="go('onb-objetivos')">Continuar</button>
-  </section>
-
-  <!-- ONBOARDING: OBJETIVOS -->
-  <section class="screen" id="screen-onb-objetivos" hidden>
-    <div class="top-back" onclick="go('onb-dia')">←</div>
-    <div class="step-progress" data-step="4"></div>
-    <div class="heading">¿Qué quieres lograr con AIDA?</div>
-    <div class="subheading">Elige lo que más te represente ahora.</div>
-    <div class="chips">
-      <div class="chip" onclick="toggleChip(this)">Organizar la escuela</div>
-      <div class="chip" onclick="toggleChip(this)">Organizar el trabajo</div>
-      <div class="chip" onclick="toggleChip(this)">Terminar proyectos</div>
-      <div class="chip" onclick="toggleChip(this)">Crear hábitos</div>
-      <div class="chip" onclick="toggleChip(this)">Reducir pendientes</div>
-    </div>
-    <div class="grow"></div>
-    <button class="btn btn-primary" onclick="go('onb-cuentame')">Continuar</button>
-  </section>
-
-  <!-- ONBOARDING: CUÉNTAME MÁS -->
-  <section class="screen" id="screen-onb-cuentame" hidden>
-    <div class="top-back" onclick="go('onb-objetivos')">←</div>
-    <div class="step-progress" data-step="5"></div>
-    <div class="heading">¿Algo más que quieras contarme?</div>
-    <div class="subheading">Opcional. Escribe libre, yo lo interpreto.</div>
-    <div class="field">
-      <textarea placeholder="Ej. Trabajo por las mañanas y estudio por las tardes. Ando terminando varios proyectos a la vez."></textarea>
-    </div>
-    <div class="grow"></div>
-    <div style="display:flex; gap:10px;">
-      <button class="btn btn-ghost" onclick="startLoading()">Omitir</button>
-      <button class="btn btn-primary" onclick="startLoading()">Continuar</button>
-    </div>
-  </section>
-
-  <!-- LOADING -->
-  <section class="screen" id="screen-loading" hidden>
-    <div class="aida-orb">✦</div>
-    <div class="heading">AIDA está aprendiendo sobre ti</div>
-    <div class="load-bar-track"><div class="load-bar-fill" id="loadBarFill"></div></div>
-    <div class="load-checklist">
-      <div class="load-item"><div class="tick">✓</div>Tu rutina</div>
-      <div class="load-item"><div class="tick">✓</div>Tus objetivos</div>
-      <div class="load-item"><div class="tick">✓</div>Tu disponibilidad</div>
-      <div class="load-item"><div class="tick">✓</div>Tus preferencias</div>
-    </div>
-  </section>
-
-  <!-- DASHBOARD -->
-  <section class="screen" id="screen-dashboard" hidden style="position:relative;">
-    <div class="dash-topbar">
-      <div>
-        <div class="greeting" id="dashGreeting">Buenos días 👋</div>
-      </div>
-      <div class="avatar" id="dashAvatar">A</div>
-    </div>
-    <div class="greeting-sub">¿Qué vamos a lograr hoy?</div>
-
-    <div class="load-card">
-      <div class="load-card-top"><span>Carga de hoy</span><strong>72%</strong></div>
-      <div class="ring-track"><div class="ring-fill"></div></div>
-      <div class="load-card-foot">3 tareas · 2h 30m estimadas</div>
-    </div>
-
-    <div class="section-label">TU PLAN</div>
-    <div class="task-list">
-      <div class="task-card urgent">
-        <div class="task-time">09:00</div>
-        <div class="task-title"><span class="dot r"></span>Terminar documentación</div>
-        <div class="task-meta">Proyecto Residencias · 1h 20m</div>
-        <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
-      </div>
-      <div class="task-card">
-        <div class="task-time">11:00</div>
-        <div class="task-title"><span class="dot y"></span>Revisar código</div>
-        <div class="task-meta">45 min</div>
-        <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
-      </div>
-      <div class="task-card">
-        <div class="task-time">16:00</div>
-        <div class="task-title"><span class="dot g"></span>Estudiar para el examen</div>
-        <div class="task-meta">Redes · 1h</div>
-        <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
-      </div>
-    </div>
-
-    <div class="bottom-nav">
-      <div class="nav-item active"><div class="ic">🏠</div>Mi Día</div>
-      <div class="nav-item"><div class="ic">📥</div>Caos</div>
-      <div class="nav-item"><div class="ic">📋</div>Tareas</div>
-      <div class="nav-item"><div class="ic">📁</div>Proyectos</div>
-      <div class="nav-item"><div class="ic">⚙️</div>Ajustes</div>
-    </div>
-
-    <div class="sheet-overlay" id="helpSheet" hidden onclick="closeSheetBg(event)">
-      <div class="sheet">
-        <div class="sheet-handle"></div>
-        <div class="sheet-title">AIDA</div>
-        <div class="sheet-q">Puedo ayudarte a hacer esto. ¿Qué necesitas?</div>
-        <div class="sheet-opts">
-          <button class="sheet-opt">Explícame cómo hacerlo</button>
-          <button class="sheet-opt">Divídelo en pasos</button>
-          <button class="sheet-opt">Hazme un plan</button>
-          <button class="sheet-opt">No sé por dónde empezar</button>
-        </div>
-        <button class="btn btn-ghost" onclick="closeSheet()">Cerrar</button>
-      </div>
-    </div>
-  </section>
-
-</div>
-
-<script>
-  function go(id){
-    document.querySelectorAll('.screen').forEach(s => s.hidden = true);
-    document.getElementById('screen-' + id).hidden = false;
-    const bar = document.querySelector('#screen-' + id + ' .step-progress');
-    if(bar){
-      const step = parseInt(bar.dataset.step, 10);
-      bar.innerHTML = '';
-      for(let i=0;i<5;i++){
-        const dot = document.createElement('span');
-        if(i < step) dot.classList.add('done');
-        bar.appendChild(dot);
-      }
-    }
-  }
-
-  function startOnboarding(){
-    const nombre = document.getElementById('reg-nombre').value;
-    if(nombre) document.getElementById('onb-nombre').placeholder = nombre;
-    go('onb-intro');
-  }
-
-  function toggleChip(el){ el.classList.toggle('selected'); }
-  function selectOnly(el){
-    el.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-  }
-  function selectRadio(el, groupId){
-    document.getElementById(groupId).querySelectorAll('.radio-opt').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-  }
-
-  function startLoading(){
-    go('loading');
-    setTimeout(() => { document.getElementById('loadBarFill').style.width = '100%'; }, 100);
-    setTimeout(() => {
-      const nombre = document.getElementById('onb-nombre').value || document.getElementById('onb-nombre').placeholder || 'Álvaro';
-      const hora = new Date().getHours();
-      const saludo = hora < 12 ? 'Buenos días' : (hora < 19 ? 'Buenas tardes' : 'Buenas noches');
-      document.getElementById('dashGreeting').textContent = saludo + ', ' + nombre + ' 👋';
-      document.getElementById('dashAvatar').textContent = nombre.trim().charAt(0).toUpperCase() || 'A';
-      go('dashboard');
-    }, 2200);
-  }
-
-  function openSheet(){ document.getElementById('helpSheet').hidden = false; }
-  function closeSheet(){ document.getElementById('helpSheet').hidden = true; }
-  function closeSheetBg(e){ if(e.target.id === 'helpSheet') closeSheet(); }
-</script>
+        function openSheet() { document.getElementById('helpSheet').hidden = false; }
+        function closeSheet() { document.getElementById('helpSheet').hidden = true; }
+        function closeSheetBg(e) { if (e.target.id === 'helpSheet') closeSheet(); }
+    </script>
 
 </body>
+
 </html>
