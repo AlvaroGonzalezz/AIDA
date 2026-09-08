@@ -27,7 +27,7 @@
         <!-- LOGIN -->
         <section class="screen" id="screen-login" hidden>
             <div class="top-back" onclick="go('splash')"><i class="bi bi-arrow-left"></i></div>
-            <div class="heading"><i class="bi bi-brightness-high"></i> Bienvenido de nuevo</div>
+            <div class="heading">☀️ Bienvenido de nuevo</div>
             <div class="subheading">Inicia sesión para continuar con tu día.</div>
             <div class="field"><label>Correo electrónico</label><input type="email" placeholder="tucorreo@ejemplo.com">
             </div>
@@ -42,71 +42,54 @@
         <!-- REGISTRO -->
         <section class="screen" id="screen-registro" hidden>
             <div class="top-back" onclick="go('splash')"><i class="bi bi-arrow-left"></i></div>
-            <div class="heading"><i class="bi bi-person"></i> Crear cuenta </div>
+            <div class="heading">👤 Crear cuenta </div>
             <div class="subheading">Empecemos por lo esencial.</div>
             <div class="field"><label>Nombre</label><input id="reg-nombre" type="text" placeholder="¿Cómo te llamas?">
             </div>
             <div class="field"><label>Correo</label><input type="email" placeholder="tucorreo@ejemplo.com"></div>
             <div class="field"><label>Contraseña</label><input type="password" placeholder="Mínimo 8 caracteres"></div>
-            <div class="field"><label>Confirmar contraseña</label><input type="password" placeholder="Vuelve a ingresar la contraseña"></div>
+            <div class="field"><label>Confirmar contraseña</label><input type="password"
+                    placeholder="Vuelve a ingresar la contraseña"></div>
 
             <button class="btn btn-primary" onclick="startOnboarding()">Crear cuenta</button>
             <div class="foot-link">¿Ya tienes cuenta? <a onclick="go('login')">Iniciar sesión</a></div>
         </section>
 
         <!-- ONBOARDING: INTRO -->
-        <section class="screen" id="screen-onb-intro" hidden>
-            <div class="aida-orb">👋</div>
-            <div class="heading">Hola, soy AIDA</div>
+        <section class="screen center" id="screen-onb-intro" hidden>
+            <img style="width: 30%;" src="assets/img/icon.png" alt="AIDA Logo">
+            <div class="heading">👋 Hola, soy AIDA</div>
             <div class="subheading">Antes de ayudarte a organizar tu día, quiero conocerte un poco. Son solo 4 preguntas
                 rápidas — puedes saltarte cualquiera.</div>
-            <div class="stack-end">
-                <button class="btn btn-primary" onclick="go('onb-quien')">Comenzar</button>
-            </div>
+            <button style="width: 50%;" class="btn btn-primary" onclick="go('onb-quien')">Comenzar</button>
         </section>
 
         <!-- ONBOARDING: QUIÉN ERES -->
         <section class="screen" id="screen-onb-quien" hidden>
             <div class="top-back" onclick="go('onb-intro')"><i class="bi bi-arrow-left"></i></div>
             <div class="step-progress" data-step="1"></div>
-            <div class="heading">¿Quién eres?</div>
-            <div class="subheading">Solo lo justo para hablarte como se debe.</div>
-            <div class="field"><label>¿Cómo quieres que te llame?</label><input id="onb-nombre" type="text"
-                    placeholder="Ej. Álvaro"></div>
-            <div class="field">
-                <label>Rango de edad</label>
-                <div class="radio-row" id="edad-group">
-                    <div class="radio-opt" onclick="selectRadio(this,'edad-group')">
-                        <div class="radio-dot"></div>&lt; 18
-                    </div>
-                    <div class="radio-opt" onclick="selectRadio(this,'edad-group')">
-                        <div class="radio-dot"></div>18 – 24
-                    </div>
-                    <div class="radio-opt" onclick="selectRadio(this,'edad-group')">
-                        <div class="radio-dot"></div>25 – 34
-                    </div>
-                    <div class="radio-opt" onclick="selectRadio(this,'edad-group')">
-                        <div class="radio-dot"></div>35+
-                    </div>
-                </div>
+            <div class="heading">¿Cuál describe mejor lo que haces?</div>
+            <div class="subheading">Elige la opción que más te represente.</div>
+            <div class="chips">
+                <div class="chip" onclick="selectOnly(this)">Estudiante</div>
+                <div class="chip" onclick="selectOnly(this)">Empleado</div>
+                <div class="chip" onclick="selectOnly(this)">Freelancer</div>
+                <div class="chip" onclick="selectOnly(this)">Emprendedor</div>
+                <div class="chip" onclick="selectOnly(this)">Busco empleo</div>
             </div>
             <div class="grow"></div>
             <button class="btn btn-primary" onclick="go('onb-situacion')">Continuar</button>
         </section>
 
-        <!-- ONBOARDING: SITUACIÓN -->
+        <!-- ONBOARDING: DETALLE -->
         <section class="screen" id="screen-onb-situacion" hidden>
             <div class="top-back" onclick="go('onb-quien')"><i class="bi bi-arrow-left"></i></div>
             <div class="step-progress" data-step="2"></div>
-            <div class="heading">¿Qué describe tu día a día?</div>
-            <div class="subheading">Puedes elegir varias opciones.</div>
-            <div class="chips">
-                <div class="chip" onclick="toggleChip(this)">Estudio</div>
-                <div class="chip" onclick="toggleChip(this)">Trabajo</div>
-                <div class="chip" onclick="toggleChip(this)">Estudio y trabajo</div>
-                <div class="chip" onclick="toggleChip(this)">Emprendo</div>
-                <div class="chip" onclick="toggleChip(this)">Freelance</div>
-                <div class="chip" onclick="toggleChip(this)">Otro</div>
+            <div class="heading">¿Qué estudias o a qué te dedicas exactamente?</div>
+            <div class="subheading">Esta respuesta me ayuda a personalizar mejor tus planes.</div>
+            <div class="field">
+                <textarea
+                    placeholder="Ej. Ingeniería en Sistemas en 9no semestre, Soporte técnico en una empresa de telecomunicaciones, Buscando trabajo en TI"></textarea>
             </div>
             <div class="grow"></div>
             <button class="btn btn-primary" onclick="go('onb-dia')">Continuar</button>
@@ -116,18 +99,12 @@
         <section class="screen" id="screen-onb-dia" hidden>
             <div class="top-back" onclick="go('onb-situacion')"><i class="bi bi-arrow-left"></i></div>
             <div class="step-progress" data-step="3"></div>
-            <div class="heading">¿Cómo es tu día?</div>
-            <div class="subheading">Así puedo armar planes que sí encajen en tu tiempo.</div>
-            <div class="field"><label>Empieza mi día</label><input type="time" value="07:00"></div>
-            <div class="field"><label>Termina mi día</label><input type="time" value="23:00"></div>
-            <div class="field">
-                <label>¿Cuándo te concentras mejor?</label>
-                <div class="chips">
-                    <div class="chip" onclick="selectOnly(this)">Mañana</div>
-                    <div class="chip" onclick="selectOnly(this)">Tarde</div>
-                    <div class="chip" onclick="selectOnly(this)">Noche</div>
-                    <div class="chip" onclick="selectOnly(this)">No estoy seguro</div>
-                </div>
+            <div class="heading">¿Cómo es tu semana normalmente?</div>
+            <div class="subheading">Así puedo adaptar mejor tus bloques de trabajo y descanso.</div>
+            <div class="chips">
+                <div class="chip" onclick="selectOnly(this)">Horario fijo</div>
+                <div class="chip" onclick="selectOnly(this)">Horario variable</div>
+                <div class="chip" onclick="selectOnly(this)">Yo decido mi horario</div>
             </div>
             <div class="grow"></div>
             <button class="btn btn-primary" onclick="go('onb-objetivos')">Continuar</button>
@@ -137,14 +114,11 @@
         <section class="screen" id="screen-onb-objetivos" hidden>
             <div class="top-back" onclick="go('onb-dia')"><i class="bi bi-arrow-left"></i></div>
             <div class="step-progress" data-step="4"></div>
-            <div class="heading">¿Qué quieres lograr con AIDA?</div>
-            <div class="subheading">Elige lo que más te represente ahora.</div>
-            <div class="chips">
-                <div class="chip" onclick="toggleChip(this)">Organizar la escuela</div>
-                <div class="chip" onclick="toggleChip(this)">Organizar el trabajo</div>
-                <div class="chip" onclick="toggleChip(this)">Terminar proyectos</div>
-                <div class="chip" onclick="toggleChip(this)">Crear hábitos</div>
-                <div class="chip" onclick="toggleChip(this)">Reducir pendientes</div>
+            <div class="heading">¿Qué es lo que más se te complica organizar ahora mismo?</div>
+            <div class="subheading">Cuéntame el reto real para ayudarte a resolverlo.</div>
+            <div class="field">
+                <textarea
+                    placeholder="Ej. Se me acumulan las tareas de la escuela con el trabajo y termino haciendo todo la noche anterior."></textarea>
             </div>
             <div class="grow"></div>
             <button class="btn btn-primary" onclick="go('onb-cuentame')">Continuar</button>
@@ -155,10 +129,10 @@
             <div class="top-back" onclick="go('onb-objetivos')"><i class="bi bi-arrow-left"></i></div>
             <div class="step-progress" data-step="5"></div>
             <div class="heading">¿Algo más que quieras contarme?</div>
-            <div class="subheading">Opcional. Escribe libre, yo lo interpreto.</div>
+            <div class="subheading">Opcional. Si quieres, puedes dejar un detalle extra.</div>
             <div class="field">
                 <textarea
-                    placeholder="Ej. Trabajo por las mañanas y estudio por las tardes. Ando terminando varios proyectos a la vez."></textarea>
+                    placeholder="Ej. Me cuesta mantenerme enfocado por la tarde y prefiero empezar temprano."></textarea>
             </div>
             <div class="grow"></div>
             <div style="display:flex; gap:10px;">
@@ -169,14 +143,14 @@
 
         <!-- LOADING -->
         <section class="screen" id="screen-loading" hidden>
-            <div class="aida-orb">✦</div>
+            <img style="width: 30%" src="assets/img/icon.png" alt="AIDA Logo">
             <div class="heading">AIDA está aprendiendo sobre ti</div>
             <div class="load-bar-track">
                 <div class="load-bar-fill" id="loadBarFill"></div>
             </div>
             <div class="load-checklist">
                 <div class="load-item">
-                    <div class="tick">✓</div>Tu rutina
+                    <div class="tick">✓</div>Tu contexto
                 </div>
                 <div class="load-item">
                     <div class="tick">✓</div>Tus objetivos
