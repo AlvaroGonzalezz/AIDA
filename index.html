@@ -188,19 +188,37 @@
                     <div class="task-time">09:00</div>
                     <div class="task-title"><span class="dot r"></span>Terminar documentación</div>
                     <div class="task-meta">Proyecto Residencias · 1h 20m</div>
-                    <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
+                    <div class="task-actions">
+                        <button class="help-btn" onclick="openSheet()">✨ Ayúdame</button>
+                        <button class="done-btn" type="button" onclick="finishTask(this)">
+                            <i class="bi bi-check-circle"></i>
+                            Finalizar
+                        </button>
+                    </div>
                 </div>
                 <div class="task-card">
                     <div class="task-time">11:00</div>
                     <div class="task-title"><span class="dot y"></span>Revisar código</div>
                     <div class="task-meta">45 min</div>
-                    <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
+                    <div class="task-actions">
+                        <button class="help-btn" onclick="openSheet()">✨ Ayúdame</button>
+                        <button class="done-btn" type="button" onclick="finishTask(this)">
+                            <i class="bi bi-check-circle"></i>
+                            Finalizar
+                        </button>
+                    </div>
                 </div>
                 <div class="task-card">
                     <div class="task-time">16:00</div>
                     <div class="task-title"><span class="dot g"></span>Estudiar para el examen</div>
                     <div class="task-meta">Redes · 1h</div>
-                    <div class="task-actions"><button class="help-btn" onclick="openSheet()">✨ Ayúdame</button></div>
+                    <div class="task-actions">
+                        <button class="help-btn" onclick="openSheet()">✨ Ayúdame</button>
+                        <button class="done-btn" type="button" onclick="finishTask(this)">
+                            <i class="bi bi-check-circle"></i>
+                            Finalizar
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -208,8 +226,8 @@
                 <div class="nav-item active">
                     <div class="ic">🏠</div>Mi Día
                 </div>
-                <div class="nav-item">
-                    <div class="ic">📥</div>Caos
+                <div class="nav-item" onclick="window.location.href='urgente.html'">
+                    <div class="ic">📥</div>Urgente
                 </div>
                 <div class="nav-item">
                     <div class="ic">📋</div>Tareas
@@ -283,6 +301,23 @@
                 document.getElementById('dashAvatar').textContent = nombre.trim().charAt(0).toUpperCase() || 'A';
                 go('dashboard');
             }, 2200);
+        }
+
+        function finishTask(button) {
+            const card = button.closest('.task-card');
+            const isFinished = card.classList.toggle('finished');
+            button.classList.toggle('finished', isFinished);
+
+            const icon = button.querySelector('i');
+            const label = button.querySelector('span');
+
+            if (isFinished) {
+                icon.className = 'bi bi-check-circle-fill';
+                button.innerHTML = '<i class="bi bi-check-circle-fill"></i>Finalizada';
+            } else {
+                icon.className = 'bi bi-check-circle';
+                button.innerHTML = '<i class="bi bi-check-circle"></i>Finalizar';
+            }
         }
 
         function openSheet() { document.getElementById('helpSheet').hidden = false; }

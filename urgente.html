@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/icon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>AIDA — Urgente</title>
+    <style>
+        #screen-urgent {
+            padding: 28px 24px 0;
+        }
+
+        .urgent-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .urgent-header .heading {
+            margin-bottom: 0;
+        }
+
+        .urgent-summary {
+            background: linear-gradient(135deg, rgba(239, 75, 95, 0.11), rgba(124, 58, 237, 0.08));
+            border: 1px solid #FBD8DC;
+            border-radius: 18px;
+            padding: 18px 18px 16px;
+            margin-bottom: 18px;
+        }
+
+        .summary-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--red);
+            text-transform: uppercase;
+        }
+
+        .summary-pill {
+            background: rgba(239, 75, 95, 0.12);
+            color: var(--red);
+            border: 1px solid rgba(239, 75, 95, 0.18);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .summary-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .summary-meta {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .urgent-list {
+            padding-bottom: 110px;
+        }
+
+        .task-card.priority-high {
+            border-color: #F7C5CB;
+            background: #FFF7F8;
+        }
+
+        .task-card.priority-medium {
+            border-color: #F9E7BD;
+            background: #FFFDF5;
+        }
+
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 5px 9px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .priority-badge.high {
+            background: rgba(239, 75, 95, 0.12);
+            color: var(--red);
+        }
+
+        .priority-badge.medium {
+            background: rgba(245, 165, 36, 0.12);
+            color: #A16300;
+        }
+
+        .task-title strong {
+            font-weight: 700;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 8px 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="phone">
+        <section class="screen" id="screen-urgent">
+            <div class="top-back" onclick="window.location.href='index.html'"><i class="bi bi-arrow-left"></i></div>
+
+            <div class="urgent-header">
+                <div>
+                    <div class="section-label">Urgente</div>
+                    <div class="heading">Tareas prioritarias</div>
+                </div>
+                <div class="">
+<i class="bi bi-exclamation-circle" style="font-size: 1.5rem; color: var(--red);   "></i>                </div>
+            </div>
+
+            <div class="urgent-summary">
+                <div class="summary-top">
+                    <span class="summary-label">Hoy</span>
+                    <span class="summary-pill">5 pendientes</span>
+                </div>
+                <div class="summary-value" >2 tareas</div>
+                <div class="summary-meta">Pulsa en <i>Ayudame</i> para obtener ayuda con estas tareas</div>
+            </div>
+
+            <div class="section-label">PRIORIDAD ALTA</div>
+            <div class="task-list urgent-list">
+                <div class="task-card urgent priority-high">
+                    <div class="priority-badge high">Urgente</div>
+                    <div class="task-time">09:00</div>
+                    <div class="task-title"><span class="dot r"></span><strong>Responder a cliente VIP</strong></div>
+                    <div class="task-meta">Correo + propuesta final · 45 min</div>
+                    <div class="task-actions"><button class="help-btn" onclick="window.location.href='index.html'">✨ Ayúdame</button></div>
+                </div>
+
+                <div class="task-card urgent priority-high">
+                    <div class="priority-badge high">Urgente</div>
+                    <div class="task-time">10:30</div>
+                    <div class="task-title"><span class="dot r"></span><strong>Corregir error en producción</strong></div>
+                    <div class="task-meta">Bug crítico del portal · 1h 10m</div>
+                    <div class="task-actions"><button class="help-btn" onclick="window.location.href='index.html'">✨ Ayúdame</button></div>
+                </div>
+
+               
+            </div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="window.location.href='index.html'">
+                    <div class="ic">🏠</div>Mi Día
+                </div>
+                <div class="nav-item active">
+                    <div class="ic">📥</div>Urgente
+                </div>
+                <div class="nav-item">
+                    <div class="ic">📋</div>Tareas
+                </div>
+                <div class="nav-item">
+                    <div class="ic">📁</div>Proyectos
+                </div>
+                <div class="nav-item">
+                    <div class="ic">⚙️</div>Ajustes
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

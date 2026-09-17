@@ -76,16 +76,17 @@ h3,
 }
 
 .phone {
+    --phone-width: min(390px, calc(100vw - 24px));
     position: relative;
     z-index: 1;
-    width: 390px;
+    width: var(--phone-width);
     max-width: 100%;
     height: 820px;
     max-height: 92vh;
     background: var(--surface);
     border-radius: 40px;
     border: 1px solid var(--line);
-    box-shadow: 0 40px 80px -30px rgba(27, 21, 51, 0.25);
+    box-shadow: 0 40px 80px -30px rgba(255, 254, 255, 0.25);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -596,6 +597,17 @@ h3,
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 16px 16px 14px;
+    transition: all .2s ease;
+}
+
+.task-card.finished {
+    border-color: rgba(34, 176, 125, 0.25);
+    background: rgba(34, 176, 125, 0.05);
+}
+
+.task-card.finished .task-title {
+    text-decoration: line-through;
+    color: var(--muted);
 }
 
 .task-card.urgent {
@@ -648,19 +660,55 @@ h3,
 .task-actions {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
-.help-btn {
+.help-btn,
+.done-btn {
     border: none;
     background: none;
     cursor: pointer;
     font-size: 13px;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    line-height: 1;
+    padding: 4px 2px;
+}
+
+.help-btn {
     background: var(--grad);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    padding: 4px 2px;
+}
+
+.help-btn i,
+.done-btn i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.done-btn {
+    color: var(--green);
+    background: rgba(34, 176, 125, 0.08);
+    border-radius: 999px;
+    padding: 7px 10px;
+    border: 1px solid rgba(34, 176, 125, 0.15);
+}
+
+.done-btn.finished {
+    background: var(--green);
+    color: #fff;
+    border-color: var(--green);
 }
 
 .bottom-nav {
@@ -686,6 +734,7 @@ h3,
     color: var(--muted-2);
     cursor: pointer;
 }
+
 .nav-item:hover {
     color: var(--violet);
     background: var(--violet-soft);
@@ -703,12 +752,16 @@ h3,
 
 /* help sheet */
 .sheet-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(27, 21, 51, 0.35);
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: var(--phone-width, min(390px, calc(100vw - 24px)));
+    max-width: calc(100vw - 16px);
     display: flex;
     align-items: flex-end;
     z-index: 5;
+    pointer-events: auto;
 }
 
 .sheet-overlay[hidden] {
@@ -716,11 +769,13 @@ h3,
 }
 
 .sheet {
-    background: var(--surface);
     width: 100%;
+    max-width: 100%;
+    background: var(--surface);
     border-radius: 24px 24px 0 0;
     padding: 26px 24px 30px;
     animation: sheetUp .25s ease;
+    box-sizing: border-box;
 }
 
 @keyframes sheetUp {
@@ -781,15 +836,18 @@ h3,
 ::-webkit-scrollbar {
     width: 0;
 }
+
 .center {
     display: flex;
     margin: 0 auto;
     align-items: center;
     justify-content: center;
 }
+
 @media (min-width: 750px) {
     .phone {
-        width: min(620px, 100%);
+        --phone-width: min(620px, calc(100vw - 64px));
+        width: var(--phone-width);
         height: min(820px, calc(100vh - 64px));
         border-radius: 28px;
     }
@@ -825,11 +883,18 @@ h3,
     .brand-tag {
         text-align: left;
     }
+
     .brand-tag {
         margin-top: -20px;
     }
-    #screen-registro{
+
+    #screen-registro {
         padding-left: 50px;
         padding-right: 50px;
+    }
+
+    .sheet-overlay {
+        width: var(--phone-width, min(390px, calc(100vw - 24px)));
+        max-width: calc(100vw - 32px);
     }
 }
