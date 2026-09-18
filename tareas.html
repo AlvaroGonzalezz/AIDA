@@ -100,8 +100,8 @@
         }
 
         .task-item .check-box {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             border: 1.5px solid var(--line);
             background: #fff;
@@ -216,6 +216,7 @@
             background: rgba(27, 21, 51, 0.35);
             display: flex;
             align-items: flex-end;
+            justify-content: center;
             z-index: 10;
         }
 
@@ -225,10 +226,15 @@
 
         .modal-panel {
             width: 100%;
+            max-width: 100%;
+            max-height: min(78vh, 680px);
             background: var(--surface);
             border-radius: 24px 24px 0 0;
             padding: 24px 20px 28px;
             animation: sheetUp .25s ease;
+            overflow-y: auto;
+            box-sizing: border-box;
+            position: relative;
         }
 
         @keyframes sheetUp {
@@ -249,6 +255,10 @@
             background: var(--line);
             border-radius: 4px;
             margin: 0 auto 18px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: var(--line);
         }
 
         .modal-title {
@@ -256,6 +266,10 @@
             font-weight: 700;
             margin-bottom: 18px;
             font-family: 'Space Grotesk', sans-serif;
+            top: 22px;
+            z-index: 2;
+            background: var(--surface);
+            padding-top: 4px;
         }
 
         .tiny-field {
@@ -302,6 +316,29 @@
         .modal-actions .btn {
             width: 100%;
         }
+
+        @media (min-width: 750px) {
+            .modal-overlay {
+                align-items: center;
+                padding: 24px;
+            }
+
+            .modal-panel {
+                width: min(520px, 100%);
+                max-height: min(76vh, 680px);
+                border-radius: 24px;
+                padding: 22px 22px 26px;
+                overflow-y: auto;
+            }
+
+            .modal-handle {
+                top: 0;
+            }
+
+            .modal-title {
+                top: 18px;
+            }
+        }
     </style>
 </head>
 
@@ -312,8 +349,8 @@
 
             <div class="tasks-header">
                 <div>
-                    <div class="section-label">Tus tareas</div>
-                    <div class="heading">Plan de hoy</div>
+                    <div class="section-label">Ser organizado es clave para ser productivo</div>
+                    <div class="heading">Tareas</div>
                 </div>
                 <button class="btn btn-ghost" style="width:auto; padding: 10px 12px;" onclick="openTaskModal()">+ Añadir</button>
             </div>
@@ -324,7 +361,7 @@
                     <div style="font-size:13px; color: var(--muted); font-weight:600;">Añadir tarea rápida</div>
                 </div>
                 <div style="display:flex; gap:8px;">
-                    <input id="quickTaskInput" type="text" placeholder="Ej. Tengo un examen de programación el viernes...">
+                    <input id="quickTaskInput" type="text" placeholder="Se especificó, por ejemplo: Tengo un examen de programación el viernes...">
                     <button class="btn-small btn-add" type="button" onclick="addQuickTask()">Añadir</button>
                 </div>
             </div>
