@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/icon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>AIDA - Ajustes</title>
+</head>
+
+<body>
+    <div class="phone">
+        <section class="screen" id="screen-settings">
+            <div class="settings-header">
+                <div class="settings-kicker">Tu espacio</div>
+                <div class="settings-title">Ajustes</div>
+                <div class="settings-subtitle">Personaliza tu perfil y la forma en que AIDA te acompaña.</div>
+            </div>
+
+            <section class="settings-section">
+                <div class="section-heading"><i class="bi bi-person-circle"></i>Perfil</div>
+                <div class="settings-panel">
+                    <div class="profile-top">
+                        <img class="profile-photo" id="profilePhoto" src="assets/img/icon.png" alt="Foto de perfil">
+                        <div class="photo-copy">
+                            <strong>Foto de perfil</strong>
+                            <span>Elige una imagen que te represente.</span>
+                            <label class="photo-button" for="photoInput"><i class="bi bi-camera"></i> Cambiar foto</label>
+                            <input id="photoInput" type="file" accept="image/*" hidden onchange="previewPhoto(event)">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="setting-field full">
+                            <label for="name">Nombre</label>
+                            <input id="name" type="text" value="Álvaro" autocomplete="name">
+                        </div>
+                        <div class="setting-field full">
+                            <label for="email">Correo electrónico</label>
+                            <input id="email" type="email" value="alvaro@ejemplo.com" autocomplete="email">
+                        </div>
+                        <div class="setting-field full">
+                            <label for="password">Contraseña</label>
+                            <div class="password-field">
+                                <input id="password" type="password" value="aida-password" readonly>
+                                <button class="password-toggle" type="button" title="Mostrar contraseña" onclick="togglePassword('password')"><i class="bi bi-eye"></i></button>
+                            </div>
+                            <div class="password-action">
+                                <span>Última actualización: hoy</span>
+                                <button class="change-password-button" type="button" onclick="toggleChangePassword()">Cambiar contraseña</button>
+                            </div>
+                            <div class="change-password-panel" id="changePasswordPanel">
+                                <div class="setting-field">
+                                    <label for="currentPassword">Contraseña actual</label>
+                                    <input id="currentPassword" type="password" autocomplete="current-password">
+                                </div>
+                                <div class="setting-field password-change-field">
+                                    <label for="newPassword">Nueva contraseña</label>
+                                    <input id="newPassword" type="password" autocomplete="new-password">
+                                </div>
+                                <div class="setting-field password-change-field">
+                                    <label for="confirmPassword">Repite la nueva contraseña</label>
+                                    <input id="confirmPassword" type="password" autocomplete="new-password">
+                                </div>
+                                <button class="btn btn-primary password-change-submit" type="button" onclick="changePassword()">Actualizar contraseña</button>
+                                <div class="password-change-status" id="passwordChangeStatus" aria-live="polite"></div>
+                            </div>
+                        </div>
+                        <div class="setting-field">
+                            <label for="age">Rango de edad</label>
+                            <select id="age">
+                                <option>18 - 24</option>
+                                <option selected>25 - 34</option>
+                                <option>35 - 44</option>
+                                <option>45 - 54</option>
+                                <option>55+</option>
+                            </select>
+                        </div>
+                        <div class="setting-field">
+                            <label for="occupation">Ocupación actual</label>
+                            <select id="occupation">
+                                <option>Estudio</option>
+                                <option selected>Trabajo</option>
+                                <option>Estudio y trabajo</option>
+                                <option>Freelance</option>
+                            </select>
+                        </div>
+                        <div class="setting-field">
+                            <label for="country">País</label>
+                            <select id="country">
+                                <option selected>España</option>
+                                <option>México</option>
+                                <option>Colombia</option>
+                                <option>Argentina</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="setting-field full">
+                            <label for="more">Cuéntame más</label>
+                            <textarea id="more" placeholder="Cuéntale a AIDA qué está pasando en tu vida..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <div class="section-heading"><i class="bi bi-robot"></i>AIDA</div>
+                <div class="settings-panel">
+                    <div class="setting-group">
+                        <div class="setting-label">Personalidad de AIDA</div>
+                        <div class="choice-row four" data-setting="personality">
+                            <button class="choice selected" type="button">Directa</button>
+                            <button class="choice" type="button">Amigable</button>
+                            <button class="choice" type="button">Profesional</button>
+                            <button class="choice" type="button">Motivadora</button>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-label">Nivel de proactividad</div>
+                        <div class="choice-row" data-setting="proactivity">
+                            <button class="choice" type="button">Baja</button>
+                            <button class="choice selected" type="button">Media</button>
+                            <button class="choice" type="button">Alta</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <button class="btn btn-primary settings-save" type="button" onclick="saveSettings()">Guardar cambios</button>
+            <div class="save-status" id="saveStatus" aria-live="polite"></div>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="window.location.href='index.html'"><div class="ic">🏠</div>Mi Día</div>
+                <div class="nav-item" onclick="window.location.href='urgente.html'"><div class="ic">📥</div>Urgente</div>
+                <div class="nav-item" onclick="window.location.href='tareas.html'"><div class="ic">📋</div>Tareas</div>
+                <div class="nav-item" onclick="window.location.href='chat.html'"><div class="ic">🤖</div>Chat con AIDA</div>
+                <div class="nav-item active"><div class="ic">⚙️</div>Ajustes</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.querySelectorAll('.choice-row').forEach(row => {
+            row.addEventListener('click', event => {
+                const choice = event.target.closest('.choice');
+                if (!choice) return;
+                row.querySelectorAll('.choice').forEach(item => item.classList.remove('selected'));
+                choice.classList.add('selected');
+            });
+        });
+
+        function previewPhoto(event) {
+            const file = event.target.files[0];
+            if (file) document.getElementById('profilePhoto').src = URL.createObjectURL(file);
+        }
+
+        function togglePassword(inputId) {
+            const password = document.getElementById(inputId);
+            const icon = password.parentElement.querySelector('.password-toggle i');
+            password.type = password.type === 'password' ? 'text' : 'password';
+            icon.className = password.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+        }
+
+        function toggleChangePassword() {
+            document.getElementById('changePasswordPanel').classList.toggle('open');
+        }
+
+        function changePassword() {
+            const current = document.getElementById('currentPassword').value;
+            const next = document.getElementById('newPassword').value;
+            const confirmation = document.getElementById('confirmPassword').value;
+            const status = document.getElementById('passwordChangeStatus');
+            status.className = 'password-change-status';
+
+            if (!current || !next || !confirmation) {
+                status.textContent = 'Completa todos los campos.';
+                return;
+            }
+            if (next.length < 8) {
+                status.textContent = 'La nueva contraseña debe tener al menos 8 caracteres.';
+                return;
+            }
+            if (next !== confirmation) {
+                status.textContent = 'Las contraseñas nuevas no coinciden.';
+                return;
+            }
+
+            document.getElementById('password').value = next;
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            status.className = 'password-change-status success';
+            status.textContent = 'Contraseña actualizada.';
+        }
+
+        function saveSettings() {
+            const settings = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                age: document.getElementById('age').value,
+                occupation: document.getElementById('occupation').value,
+                country: document.getElementById('country').value,
+                more: document.getElementById('more').value,
+                personality: document.querySelector('[data-setting="personality"] .selected').textContent,
+                proactivity: document.querySelector('[data-setting="proactivity"] .selected').textContent
+            };
+            localStorage.setItem('aidaSettings', JSON.stringify(settings));
+            document.getElementById('saveStatus').textContent = 'Cambios guardados';
+            window.setTimeout(() => document.getElementById('saveStatus').textContent = '', 2200);
+        }
+    </script>
+</body>
+
+</html>

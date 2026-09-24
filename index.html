@@ -32,7 +32,7 @@
             <div class="field"><label>Correo electrónico</label><input type="email" placeholder="tucorreo@ejemplo.com">
             </div>
             <div class="field"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
-            <button class="btn btn-text" style="align-self:flex-start; padding-left:0; margin-bottom:8px;">¿Olvidaste tu
+            <button class="btn btn-text forgot-password-button">¿Olvidaste tu
                 contraseña?</button>
             <button class="btn btn-primary" onclick="go('dashboard')">Iniciar sesión</button>
 
@@ -57,11 +57,11 @@
 
         <!-- ONBOARDING: INTRO -->
         <section class="screen center" id="screen-onb-intro" hidden>
-            <img style="width: 30%;" src="assets/img/icon.png" alt="AIDA Logo">
+            <img class="onboarding-logo" src="assets/img/icon.png" alt="AIDA Logo">
             <div class="heading">👋 Hola, soy AIDA</div>
             <div class="subheading">Antes de ayudarte a organizar tu día, quiero conocerte un poco. Son solo 4 preguntas
                 rápidas — puedes saltarte cualquiera.</div>
-            <button style="width: 50%;" class="btn btn-primary" onclick="go('onb-quien')">Comenzar</button>
+            <button class="btn btn-primary onboarding-start-button" onclick="go('onb-quien')">Comenzar</button>
         </section>
 
         <!-- ONBOARDING: QUIÉN ERES -->
@@ -135,7 +135,7 @@
                     placeholder="Ej. Me cuesta mantenerme enfocado por la tarde y prefiero empezar temprano."></textarea>
             </div>
             <div class="grow"></div>
-            <div style="display:flex; gap:10px;">
+            <div class="onboarding-actions">
                 <button class="btn btn-ghost" onclick="startLoading()">Omitir</button>
                 <button class="btn btn-primary" onclick="startLoading()">Continuar</button>
             </div>
@@ -143,7 +143,7 @@
 
         <!-- LOADING -->
         <section class="screen" id="screen-loading" hidden>
-            <img style="width: 30%" src="assets/img/icon.png" alt="AIDA Logo">
+            <img class="onboarding-logo" src="assets/img/icon.png" alt="AIDA Logo">
             <div class="heading">AIDA está aprendiendo sobre ti</div>
             <div class="load-bar-track">
                 <div class="load-bar-fill" id="loadBarFill"></div>
@@ -165,7 +165,7 @@
         </section>
 
         <!-- DASHBOARD -->
-        <section class="screen" id="screen-dashboard" hidden style="position:relative;">
+        <section class="screen dashboard-screen" id="screen-dashboard" hidden>
             <div class="dash-topbar">
                 <div>
                     <div class="greeting" id="dashGreeting">Buenos días 👋</div>
@@ -233,10 +233,10 @@
                 <div class="nav-item" onclick="window.location.href='tareas.html'">
                     <div class="ic">📋</div>Tareas
                 </div>
-                <div class="nav-item">
-                    <div class="ic">📁</div>Proyectos
+                <div class="nav-item" onclick="window.location.href='chat.html'">
+                    <div class="ic">🤖</div>Chat con AIDA
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="window.location.href='ajustes.html'">
                     <div class="ic">⚙️</div>Ajustes
                 </div>
             </div>

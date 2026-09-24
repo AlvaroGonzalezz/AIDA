@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/icon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <title>AIDA - Chat</title>
+</head>
+
+<body>
+    <div class="phone">
+        <section class="screen" id="screen-chat">
+            <div class="chat-header">
+                <div class="chat-title-wrap">
+                    <img class="chat-avatar-image" src="assets/img/icon.png" alt="Avatar de AIDA">
+                    <div>
+                        <div class="chat-heading">Chat con AIDA</div>
+                        <div class="chat-status"><span class="status-dot"></span> Lista para ayudarte</div>
+                    </div>
+                </div>
+                <button class="clear-chat" type="button" title="Limpiar conversación" onclick="clearChat()">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </button>
+            </div>
+
+            <div class="chat-intro">
+                <strong>¿En qué puedo ayudarte hoy?</strong>
+                <p>Pregúntame por tus tareas, prioridades o el siguiente paso de tu día.</p>
+            </div>
+
+            <div class="chat-log" id="chatLog" aria-live="polite">
+                <div class="message aida">Hola, Álvaro. Puedo ayudarte a organizar tus tareas y decidir qué hacer
+                    primero.</div>
+            </div>
+
+            <div class="suggestions-label">Prueba a preguntarme</div>
+            <div class="suggestions">
+                <button class="suggestion" type="button" onclick="useSuggestion(this)">¿Qué tengo pendiente hoy?</button>
+                <button class="suggestion" type="button" onclick="useSuggestion(this)">¿Qué hago primero?</button>
+                <button class="suggestion" type="button" onclick="useSuggestion(this)">Ayúdame a organizar mi día</button>
+            </div>
+
+            <form class="chat-form" onsubmit="sendMessage(event)">
+                <input class="chat-input" id="chatInput" type="text" autocomplete="off"
+                    placeholder="Escribe tu pregunta..." aria-label="Escribe tu pregunta">
+                <button class="send-button" type="submit" title="Enviar mensaje" aria-label="Enviar mensaje">
+                    <i class="bi bi-arrow-up"></i>
+                </button>
+            </form>
+
+            <div class="bottom-nav">
+                <div class="nav-item" onclick="window.location.href='index.html'">
+                    <div class="ic">🏠</div>Mi Día
+                </div>
+                <div class="nav-item" onclick="window.location.href='urgente.html'">
+                    <div class="ic">📥</div>Urgente
+                </div>
+                <div class="nav-item" onclick="window.location.href='tareas.html'">
+                    <div class="ic">📋</div>Tareas
+                </div>
+                <div class="nav-item active">
+                    <div class="ic">🤖</div>Chat con AIDA
+                </div>
+                <div class="nav-item" onclick="window.location.href='ajustes.html'">
+                    <div class="ic">⚙️</div>Ajustes
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const answers = {
+            '¿qué tengo pendiente hoy?': 'Tienes 2 tareas prioritarias: responder a un cliente VIP y corregir el error en producción.',
+            '¿qué hago primero?': 'Empieza por corregir el error en producción. Es urgente y puede bloquear a otras personas.',
+            'ayúdame a organizar mi día': 'Primero resuelve el error crítico, después responde al cliente VIP y reserva un bloque para revisar tus tareas restantes.'
+        };
+
+        function useSuggestion(button) {
+            document.getElementById('chatInput').value = button.textContent;
+            document.getElementById('chatInput').focus();
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            input.value = '';
+            const answer = answers[text.toLowerCase()] || 'Puedo ayudarte a revisar tus tareas, priorizarlas o convertir una tarea grande en pasos pequeños. ¿Qué necesitas organizar?';
+            window.setTimeout(() => addMessage(answer, 'aida'), 350);
+        }
+
+        function addMessage(text, role) {
+            const log = document.getElementById('chatLog');
+            const message = document.createElement('div');
+            message.className = 'message ' + role;
+            message.textContent = text;
+            log.appendChild(message);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function clearChat() {
+            document.getElementById('chatLog').innerHTML = '<div class="message aida">Conversación limpia. ¿Qué quieres organizar?</div>';
+        }
+    </script>
+</body>
+
+</html>
