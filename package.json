@@ -1,0 +1,27 @@
+{
+  "name": "aida",
+  "version": "1.0.0",
+  "description": "AIDA es un prototipo de aplicación web para un asistente de inteligencia artificial enfocado en ayudar a las personas a organizar su día, tareas y objetivos personales.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite --host 127.0.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlvaroGonzalezz/AIDA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlvaroGonzalezz/AIDA/issues"
+  },
+  "homepage": "https://github.com/AlvaroGonzalezz/AIDA#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4"
+  }
+}

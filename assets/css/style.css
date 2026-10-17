@@ -232,6 +232,22 @@ h3,
     color: var(--muted);
 }
 
+.auth-status {
+    min-height: 18px;
+    margin: 8px 0;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+.auth-status.error {
+    color: #B42318;
+}
+
+.auth-status.success {
+    color: var(--green);
+}
+
 .foot-link a {
     color: var(--violet);
     font-weight: 600;
@@ -1181,6 +1197,10 @@ h3,
             color: var(--green);
             font-size: 11px;
             text-align: center;
+        }
+
+        .save-status.error {
+            color: #B42318;
         }
 
         @media (max-width: 360px) {

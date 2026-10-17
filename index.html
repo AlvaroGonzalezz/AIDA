@@ -29,12 +29,13 @@
             <div class="top-back" onclick="go('splash')"><i class="bi bi-arrow-left"></i></div>
             <div class="heading">☀️ Bienvenido de nuevo</div>
             <div class="subheading">Inicia sesión para continuar con tu día.</div>
-            <div class="field"><label>Correo electrónico</label><input type="email" placeholder="tucorreo@ejemplo.com">
+            <div class="field"><label for="login-email">Correo electrónico</label><input id="login-email" type="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
             </div>
-            <div class="field"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
+            <div class="field"><label for="login-password">Contraseña</label><input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password" required></div>
             <button class="btn btn-text forgot-password-button">¿Olvidaste tu
                 contraseña?</button>
-            <button class="btn btn-primary" onclick="go('dashboard')">Iniciar sesión</button>
+            <div class="auth-status" id="loginStatus" role="status" aria-live="polite"></div>
+            <button class="btn btn-primary" type="button" onclick="signIn()">Iniciar sesión</button>
 
             <div class="foot-link">¿No tienes cuenta? <a onclick="go('registro')">Crear cuenta</a></div>
         </section>
@@ -44,14 +45,15 @@
             <div class="top-back" onclick="go('splash')"><i class="bi bi-arrow-left"></i></div>
             <div class="heading">👤 Crear cuenta </div>
             <div class="subheading">Empecemos por lo esencial.</div>
-            <div class="field"><label>Nombre</label><input id="reg-nombre" type="text" placeholder="¿Cómo te llamas?">
+                <div class="field"><label for="reg-nombre">Nombre</label><input id="reg-nombre" type="text" placeholder="¿Cómo te llamas?" autocomplete="name" required>
             </div>
-            <div class="field"><label>Correo</label><input type="email" placeholder="tucorreo@ejemplo.com"></div>
-            <div class="field"><label>Contraseña</label><input type="password" placeholder="Mínimo 8 caracteres"></div>
-            <div class="field"><label>Confirmar contraseña</label><input type="password"
-                    placeholder="Vuelve a ingresar la contraseña"></div>
+                <div class="field"><label for="reg-email">Correo</label><input id="reg-email" type="email" placeholder="tucorreo@ejemplo.com" autocomplete="email" required></div>
+                <div class="field"><label for="reg-password">Contraseña</label><input id="reg-password" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" minlength="8" required></div>
+                <div class="field"><label for="reg-confirm-password">Confirmar contraseña</label><input id="reg-confirm-password" type="password"
+                    placeholder="Vuelve a ingresar la contraseña" autocomplete="new-password" minlength="8" required></div>
 
-            <button class="btn btn-primary" onclick="startOnboarding()">Crear cuenta</button>
+                <div class="auth-status" id="registerStatus" role="status" aria-live="polite"></div>
+                <button class="btn btn-primary" type="button" onclick="startOnboarding()">Crear cuenta</button>
             <div class="foot-link">¿Ya tienes cuenta? <a onclick="go('login')">Iniciar sesión</a></div>
         </section>
 
@@ -70,7 +72,7 @@
             <div class="step-progress" data-step="1"></div>
             <div class="heading">¿Cuál describe mejor lo que haces?</div>
             <div class="subheading">Elige la opción que más te represente.</div>
-            <div class="chips">
+            <div class="chips" id="occupationChips">
                 <div class="chip" onclick="selectOnly(this)">Estudiante</div>
                 <div class="chip" onclick="selectOnly(this)">Empleado</div>
                 <div class="chip" onclick="selectOnly(this)">Freelancer</div>
@@ -88,7 +90,7 @@
             <div class="heading">¿Qué estudias o a qué te dedicas exactamente?</div>
             <div class="subheading">Esta respuesta me ayuda a personalizar mejor tus planes.</div>
             <div class="field">
-                <textarea
+                <textarea id="occupationDetail"
                     placeholder="Ej. Ingeniería en Sistemas en 9no semestre, Soporte técnico en una empresa de telecomunicaciones, Buscando trabajo en TI"></textarea>
             </div>
             <div class="grow"></div>
@@ -101,7 +103,7 @@
             <div class="step-progress" data-step="3"></div>
             <div class="heading">¿Cómo es tu semana normalmente?</div>
             <div class="subheading">Así puedo adaptar mejor tus bloques de trabajo y descanso.</div>
-            <div class="chips">
+            <div class="chips" id="scheduleChips">
                 <div class="chip" onclick="selectOnly(this)">Horario fijo</div>
                 <div class="chip" onclick="selectOnly(this)">Horario variable</div>
                 <div class="chip" onclick="selectOnly(this)">Yo decido mi horario</div>
@@ -117,7 +119,7 @@
             <div class="heading">¿Qué es lo que más se te complica organizar ahora mismo?</div>
             <div class="subheading">Cuéntame el reto real para ayudarte a resolverlo.</div>
             <div class="field">
-                <textarea
+                <textarea id="organizationChallenge"
                     placeholder="Ej. Se me acumulan las tareas de la escuela con el trabajo y termino haciendo todo la noche anterior."></textarea>
             </div>
             <div class="grow"></div>
@@ -131,7 +133,7 @@
             <div class="heading">¿Algo más que quieras contarme?</div>
             <div class="subheading">Opcional. Si quieres, puedes dejar un detalle extra.</div>
             <div class="field">
-                <textarea
+                <textarea id="extraContext"
                     placeholder="Ej. Me cuesta mantenerme enfocado por la tarde y prefiero empezar temprano."></textarea>
             </div>
             <div class="grow"></div>
@@ -162,6 +164,8 @@
                     <div class="tick">✓</div>Tus preferencias
                 </div>
             </div>
+            <div class="auth-status" id="onboardingStatus" role="status" aria-live="polite"></div>
+            <button class="btn btn-primary" id="retryOnboardingButton" type="button" onclick="startLoading()" hidden>Reintentar guardado</button>
         </section>
 
         <!-- DASHBOARD -->
@@ -259,7 +263,10 @@
 
     </div>
 
+    <script type="module" src="/js/supabase-client.js"></script>
     <script>
+        let currentUserName = '';
+
         function go(id) {
             document.querySelectorAll('.screen').forEach(s => s.hidden = true);
             document.getElementById('screen-' + id).hidden = false;
@@ -275,10 +282,98 @@
             }
         }
 
-        function startOnboarding() {
-            const nombre = document.getElementById('reg-nombre').value;
-            if (nombre) document.getElementById('onb-nombre').placeholder = nombre;
-            go('onb-intro');
+        function showAuthStatus(elementId, message, state = '') {
+            const status = document.getElementById(elementId);
+            status.textContent = message;
+            status.classList.remove('error', 'success');
+            if (state) status.classList.add(state);
+        }
+
+        async function startOnboarding() {
+            const name = document.getElementById('reg-nombre').value.trim();
+            const emailInput = document.getElementById('reg-email');
+            const email = emailInput.value.trim();
+            const password = document.getElementById('reg-password').value;
+            const confirmation = document.getElementById('reg-confirm-password').value;
+            const client = window.aidaSupabase;
+
+            if (!client) {
+                showAuthStatus('registerStatus', 'No se pudo conectar con Supabase. Revisa la configuración.', 'error');
+                return;
+            }
+            if (!name || !emailInput.validity.valid || !password || !confirmation) {
+                showAuthStatus('registerStatus', 'Completa todos los campos con datos válidos.', 'error');
+                return;
+            }
+            if (password.length < 8) {
+                showAuthStatus('registerStatus', 'La contraseña debe tener al menos 8 caracteres.', 'error');
+                return;
+            }
+            if (password !== confirmation) {
+                showAuthStatus('registerStatus', 'Las contraseñas no coinciden.', 'error');
+                return;
+            }
+
+            const button = document.querySelector('#screen-registro .btn-primary');
+            button.disabled = true;
+            showAuthStatus('registerStatus', 'Creando tu cuenta...');
+
+            try {
+                const { data, error } = await client.auth.signUp({
+                    email,
+                    password,
+                    options: { data: { display_name: name } }
+                });
+
+                if (error) throw error;
+                currentUserName = name;
+
+                if (!data.session) {
+                    showAuthStatus('registerStatus', 'Cuenta creada. Confirma tu correo y luego inicia sesión.', 'success');
+                    return;
+                }
+
+                go('onb-intro');
+            } catch (error) {
+                showAuthStatus('registerStatus', error.message || 'No se pudo crear la cuenta.', 'error');
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function signIn() {
+            const emailInput = document.getElementById('login-email');
+            const email = emailInput.value.trim();
+            const password = document.getElementById('login-password').value;
+            const client = window.aidaSupabase;
+
+            if (!client) {
+                showAuthStatus('loginStatus', 'No se pudo conectar con Supabase. Revisa la configuración.', 'error');
+                return;
+            }
+            if (!emailInput.validity.valid || !password) {
+                showAuthStatus('loginStatus', 'Escribe un correo válido y tu contraseña.', 'error');
+                return;
+            }
+
+            const button = document.querySelector('#screen-login .btn-primary');
+            button.disabled = true;
+            showAuthStatus('loginStatus', 'Iniciando sesión...');
+
+            try {
+                const { data, error } = await client.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                currentUserName = data.user.user_metadata?.display_name || email.split('@')[0];
+                const hour = new Date().getHours();
+                const greeting = hour < 12 ? 'Buenos días' : (hour < 19 ? 'Buenas tardes' : 'Buenas noches');
+                document.getElementById('dashGreeting').textContent = greeting + ', ' + currentUserName + ' 👋';
+                document.getElementById('dashAvatar').textContent = currentUserName.trim().charAt(0).toUpperCase() || 'A';
+                go('dashboard');
+            } catch (error) {
+                showAuthStatus('loginStatus', error.message || 'No se pudo iniciar sesión.', 'error');
+            } finally {
+                button.disabled = false;
+            }
         }
 
         function toggleChip(el) { el.classList.toggle('selected'); }
@@ -291,17 +386,52 @@
             el.classList.add('selected');
         }
 
-        function startLoading() {
+        async function startLoading() {
             go('loading');
-            setTimeout(() => { document.getElementById('loadBarFill').style.width = '100%'; }, 100);
-            setTimeout(() => {
-                const nombre = document.getElementById('onb-nombre').value || document.getElementById('onb-nombre').placeholder || 'Álvaro';
+            const status = document.getElementById('onboardingStatus');
+            const retryButton = document.getElementById('retryOnboardingButton');
+            const client = window.aidaSupabase;
+            status.textContent = 'Guardando tu perfil...';
+            status.classList.remove('error', 'success');
+            retryButton.hidden = true;
+
+            try {
+                if (!client) throw new Error('No se pudo conectar con Supabase. Revisa la configuración.');
+                const { data: { user }, error: userError } = await client.auth.getUser();
+                if (userError) throw userError;
+                if (!user) throw new Error('Inicia sesión para guardar tus respuestas.');
+
+                const occupation = document.querySelector('#occupationChips .chip.selected')?.textContent.trim() || null;
+                const scheduleLabel = document.querySelector('#scheduleChips .chip.selected')?.textContent.trim();
+                const scheduleType = scheduleLabel === 'Horario fijo' ? 'fixed'
+                    : scheduleLabel === 'Horario variable' ? 'variable'
+                        : scheduleLabel === 'Yo decido mi horario' ? 'flexible' : null;
+                const profile = {
+                    display_name: currentUserName || user.user_metadata?.display_name || null,
+                    occupation,
+                    occupation_detail: document.getElementById('occupationDetail').value.trim() || null,
+                    schedule_type: scheduleType,
+                    organization_challenge: document.getElementById('organizationChallenge').value.trim() || null,
+                    extra_context: document.getElementById('extraContext').value.trim() || null,
+                    onboarding_completed_at: new Date().toISOString()
+                };
+                const { error } = await client.from('profiles').update(profile).eq('id', user.id);
+                if (error) throw error;
+
+                status.textContent = 'Perfil guardado.';
+                status.classList.add('success');
+                document.getElementById('loadBarFill').style.width = '100%';
+                const nombre = profile.display_name || 'AIDA';
                 const hora = new Date().getHours();
                 const saludo = hora < 12 ? 'Buenos días' : (hora < 19 ? 'Buenas tardes' : 'Buenas noches');
                 document.getElementById('dashGreeting').textContent = saludo + ', ' + nombre + ' 👋';
                 document.getElementById('dashAvatar').textContent = nombre.trim().charAt(0).toUpperCase() || 'A';
-                go('dashboard');
-            }, 2200);
+                window.setTimeout(() => go('dashboard'), 650);
+            } catch (error) {
+                status.textContent = error.message || 'No se pudieron guardar tus respuestas.';
+                status.classList.add('error');
+                retryButton.hidden = false;
+            }
         }
 
         function finishTask(button) {
