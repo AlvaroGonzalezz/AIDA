@@ -151,6 +151,8 @@
 
             <button class="btn btn-primary settings-save" type="button" onclick="saveSettings()">Guardar cambios</button>
             <div class="save-status" id="saveStatus" aria-live="polite"></div>
+            <button class="btn btn-logout" id="logoutButton" type="button" onclick="signOut()">Cerrar sesión</button>
+            <div class="save-status" id="logoutStatus" aria-live="polite"></div>
 
             <div class="bottom-nav">
                 <div class="nav-item" onclick="window.location.href='index.html'"><div class="ic">🏠</div>Mi Día</div>
@@ -174,6 +176,33 @@
         });
 
         window.addEventListener('DOMContentLoaded', loadSettings);
+
+        async function signOut() {
+            const client = window.aidaSupabase;
+            const button = document.getElementById('logoutButton');
+            const status = document.getElementById('logoutStatus');
+            status.textContent = '';
+            status.classList.remove('error');
+
+            if (!client) {
+                status.textContent = 'No se pudo conectar con Supabase.';
+                status.classList.add('error');
+                return;
+            }
+
+            button.disabled = true;
+            status.textContent = 'Cerrando sesión...';
+            try {
+                const { error } = await client.auth.signOut();
+                if (error) throw error;
+                window.location.href = 'index.html';
+            } catch (error) {
+                status.textContent = error.message || 'No se pudo cerrar la sesión.';
+                status.classList.add('error');
+            } finally {
+                button.disabled = false;
+            }
+        }
 
         async function loadSettings() {
             const client = window.aidaSupabase;

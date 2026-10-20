@@ -1192,6 +1192,22 @@ h3,
             margin: 2px 0 -25px;
         }
 
+        .btn-logout {
+            margin-top: 18px;
+            border: 1px solid #F3C4C8;
+            background: #FFF8F8;
+            color: var(--red);
+        }
+
+        .btn-logout:hover {
+            background: #FDEBED;
+        }
+
+        .btn-logout:disabled {
+            cursor: wait;
+            opacity: 0.65;
+        }
+
         .save-status {
             min-height: 17px;
             color: var(--green);
